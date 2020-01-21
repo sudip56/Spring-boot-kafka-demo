@@ -4,11 +4,13 @@ import java.security.SecureRandom;
 import java.util.Optional;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.intelliswift.sudip.app.DAO.CredentialDAO;
-import com.intelliswift.sudip.app.DAO.StudentDAO;
+import com.intelliswift.sudip.app.DAO.CredentialRepository;
+import com.intelliswift.sudip.app.DAO.StudentRepository;
 import com.intelliswift.sudip.app.DTO.CredentialDTO;
 import com.intelliswift.sudip.app.DTO.StudentDTO;
 import com.intelliswift.sudip.app.entity.CredentialDetailsEntity;
@@ -20,16 +22,18 @@ import com.intelliswift.sudip.app.mapper.StudentMapper;
 public class CredentialGenaratorServiceImpl implements CredentialGenaratorService {
 
 	@Autowired
-	private CredentialDAO credentialDAO;
+	private CredentialRepository credentialDAO;
 
 	@Autowired
-	private StudentDAO StudentDAO;
+	private StudentRepository StudentDAO;
 
 	@Autowired
 	private CredentialMapper credentialMapper;
 
 	@Autowired
 	private StudentMapper studentMapper;
+	
+	private static final Logger log = LoggerFactory.getLogger(CredentialGenaratorServiceImpl.class);
 
 	private static final Random RANDOM = new SecureRandom();
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -56,7 +60,7 @@ public class CredentialGenaratorServiceImpl implements CredentialGenaratorServic
 
 		Optional<StudentEntity> updatableStudent = StudentDAO.findById(studentDTO.getStudentId());
 
-		if (updatableStudent.isPresent()) {
+		if (updatableStudent.isPresent() && !updatableStudent.isEmpty()) {
 
 			StudentEntity studentEntity = updatableStudent.get();
 			studentEntity.setStatus("confirmed");

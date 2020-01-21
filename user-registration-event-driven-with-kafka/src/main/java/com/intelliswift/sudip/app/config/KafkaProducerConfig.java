@@ -14,8 +14,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.intelliswift.sudip.app.DTO.StudentDTO;
-
 @EnableKafka
 @Configuration
 public class KafkaProducerConfig {
@@ -24,7 +22,7 @@ public class KafkaProducerConfig {
 	private String bootstrapServer;
 	
 	@Bean
-	public ProducerFactory<String, StudentDTO> producerFactory() {
+	public ProducerFactory<String, Object> producerFactory() {
 		Map<String, Object> configProps = new HashMap<>();
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -33,7 +31,7 @@ public class KafkaProducerConfig {
 	}
 
 	@Bean
-	public KafkaTemplate<String, StudentDTO> kafkaTemplate() {
+	public KafkaTemplate<String, Object> kafkaTemplate() {
 		return new KafkaTemplate<>(producerFactory());
 	}
 }

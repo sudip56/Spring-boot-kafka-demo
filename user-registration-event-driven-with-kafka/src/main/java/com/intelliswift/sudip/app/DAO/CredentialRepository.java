@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.intelliswift.sudip.app.entity.CredentialDetailsEntity;
 
 @Repository
-public interface CredentialDAO extends JpaRepository<CredentialDetailsEntity, Integer> {
+public interface CredentialRepository extends JpaRepository<CredentialDetailsEntity, Integer> {
 	
 	public CredentialDetailsEntity findByUserNameAndPassword(String userName,String password);
 }

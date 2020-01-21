@@ -19,7 +19,7 @@ public class StudentCreateListner {
 	private EmailService emailService;
 
 	@KafkaListener(topics = {
-			"create-student-topic16" }, groupId = "group_id", containerFactory = "kafkaListenerContainerFactory")
+			"student-operation" }, groupId = "group_id", containerFactory = "kafkaListenerContainerFactory")
 	public void consumer(StudentDTO studentDTO) {
 		CredentialDTO credentialDTO = credentialGenaratorService.generateCredential(studentDTO);
 		emailService.send(studentDTO.getEmail(), "Registration Successfully completed",

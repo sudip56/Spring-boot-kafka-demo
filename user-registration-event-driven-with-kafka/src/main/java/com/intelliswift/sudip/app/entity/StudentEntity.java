@@ -2,7 +2,6 @@ package com.intelliswift.sudip.app.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -53,5 +52,4 @@ public class StudentEntity implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "credential_id")
 	private CredentialDetailsEntity credentialDetailsEntity;
-
 }

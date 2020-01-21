@@ -25,6 +25,6 @@ public class StudentDTO implements Serializable {
 	private String lastName;
 	private String email;
 	private String status;
+	private String activity;
 	private CredentialDTO credentialDTO;
-		
 }

@@ -13,8 +13,6 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.intelliswift.sudip.app.DTO.StudentDTO;
-
 @Configuration
 @EnableKafka
 public class KafkaConsumerConfig {
@@ -23,8 +21,11 @@ public class KafkaConsumerConfig {
 	    private String bootstrapAddress;
 	 
 	@Bean
-	public ConsumerFactory<String, StudentDTO> consumerFactory() {
-
+	public ConsumerFactory<String, Object> consumerFactory() {
+		
+		final JsonDeserializer<Object> jsonDeserializer = new JsonDeserializer<>();
+		jsonDeserializer.addTrustedPackages("*");
+		
 		HashMap<String, Object> config = new HashMap<>();
 		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
 		config.put(ConsumerConfig.GROUP_ID_CONFIG, "group_id");
@@ -32,12 +33,12 @@ public class KafkaConsumerConfig {
 		config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
 		return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
-				new JsonDeserializer(StudentDTO.class));
+				jsonDeserializer);
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, StudentDTO> kafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, StudentDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+	public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 	}

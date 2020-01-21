@@ -9,7 +9,7 @@ import com.intelliswift.sudip.app.request.StudentRequest;
 
 @Component
 public class StudentMapper {
-	
+
 	@Autowired
 	private CredentialMapper credentialMapper;
 
@@ -30,9 +30,8 @@ public class StudentMapper {
 		studentEntity.setFirstName(studentDTO.getFirstName());
 		studentEntity.setLastName(studentDTO.getLastName());
 		studentEntity.setEmail(studentDTO.getEmail());
-		if(null != studentDTO.getCredentialDTO())
-		studentEntity.setCredentialDetailsEntity(credentialMapper.entityMapper(studentDTO.getCredentialDTO()));
-
+		if (null != studentDTO.getCredentialDTO())
+			studentEntity.setCredentialDetailsEntity(credentialMapper.entityMapper(studentDTO.getCredentialDTO()));
 		return studentEntity;
 	}
 
